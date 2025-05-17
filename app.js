@@ -130,6 +130,12 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use((req, res, next) => {
+  // Pass the user from the session to all templates
+  res.locals.currentUser = req.user;
+  next();
+});
+
 
 
 app.use((req,res,next) => {
@@ -149,12 +155,6 @@ app.use('/campgrounds/:id/reviews', reviewRoutes);
 app.get('/', (req,res) => {
     res.render('home');
 })
-
-app.use((req, res, next) => {
-  // Pass the user from the session to all templates
-  res.locals.currentUser = req.user;
-  next();
-});
 
 
 app.all('*', (req,res,next) => {
