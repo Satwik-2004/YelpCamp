@@ -6,7 +6,22 @@ const { storage } = require('../cloudinary');
 const { isLoggedIn, validateCampground, isAuthor } = require('../middleware');
 const campgrounds= require('../controllers/campgrounds');
 const multer= require('multer');
-const upload= multer({ storage });
+
+const fileFilter = (req, file, cb) => {
+    const allowedMimeTypes = [
+        'image/jpeg',
+        'image/png',
+        'image/jpg',
+        'image/avif'
+    ];
+    if (allowedMimeTypes.includes(file.mimetype)) {
+        cb(null, true);
+    } else {
+        cb(new Error(`Unsupported file type: ${file.mimetype}`), false);
+    }
+};
+
+const upload= multer({ storage,fileFilter });
 
 router.route('/')
      .get(catchAsync( campgrounds.index ))
