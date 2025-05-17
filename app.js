@@ -166,7 +166,7 @@ app.use((err,req,res,next) => {
     if(!err.message) err.message= 'OH NO! Something went wrong!'
     res.status(statusCode).render('error', { err });
 })
-
+const port = process.env.PORT || 3000
 app.listen(3000, ()=>{
-    console.log('Yelp at port 3000');
+    console.log(`Yelp at port ${port}`);
 })
