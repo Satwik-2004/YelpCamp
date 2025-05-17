@@ -52,8 +52,8 @@ module.exports.renderEditCampground = async (req,res) => {
 
 module.exports.updateCampground = async (req,res) => {
     const { id } = req.params;
-    const campground= await Campground.findByIdAndUpdate(id, { ...req.body.campground });
-    
+    const campground= await Campground.findById(id);
+    campground.set({...req.body.campground}) ;   
     const geoData = await maptilerClient.geocoding.forward(req.body.campground.location, { limit: 1 });
     campground.geometry = geoData.features[0]?.geometry || campground.geometry;
 
