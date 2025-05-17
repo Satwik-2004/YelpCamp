@@ -150,7 +150,11 @@ app.get('/', (req,res) => {
     res.render('home');
 })
 
-
+app.use((req, res, next) => {
+  // Pass the user from the session to all templates
+  res.locals.currentUser = req.user;
+  next();
+});
 
 
 app.all('*', (req,res,next) => {
