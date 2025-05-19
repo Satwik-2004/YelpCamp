@@ -19,7 +19,10 @@ module.exports.createCampground= async (req,res,next) => {
     campground.geometry = geoData.features[0].geometry;
     
     
-    campground.images= req.files.map(f => ({url: f.path, filename: f.filename }));
+    campground.images = req.files.map(f => ({ 
+    url: f.path.replace('/upload', '/upload/q_auto,f_auto'), 
+    filename: f.filename 
+}));
     campground.author= req.user._id;
     await campground.save();
     req.flash('success', 'Successfully created a new campground!');
@@ -57,7 +60,10 @@ module.exports.updateCampground = async (req,res) => {
     const geoData = await maptilerClient.geocoding.forward(req.body.campground.location, { limit: 1 });
     campground.geometry = geoData.features[0]?.geometry || campground.geometry;
 
-    const imgs = req.files.map(f => ({url: f.path, filename: f.filename }));
+    campground.images = req.files.map(f => ({ 
+    url: f.path.replace('/upload', '/upload/q_auto,f_auto'), 
+    filename: f.filename 
+}));
     campground.images.push(...imgs);
     await campground.save();
     if(req.body.deleteImages){
