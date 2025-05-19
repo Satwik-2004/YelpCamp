@@ -15,7 +15,10 @@
             <div class="row">
                 <div class="col-md-4">
                     <% if(campground.images.length) {%>
-                    <img crossorigin="anonymous" class="img-fluid" src="<%= campground.images.length ? campground.images[0].url : '/images/default-campground.jpg' %>">
+                        <img class="img-fluid" alt="" 
+     src="<%= campground.images && campground.images.length && campground.images[0].url ? 
+          campground.images[0].url : '/images/default-campground.jpg' %>">
+                        
                     <% } else {%>
                         <img crossorigin="anonymous" class="img-fluid" src="https://res-console.cloudinary.com/dhzyemopo/thumbnails/v1/image/upload/v1736786976/WWVscENhbXAvc21pbHB6dWxvZmpmdWpseTZlM3Y=/folder_thumbnail/d184OCxoXzg4LGNfdGh1bWI=">
                     <% } %>

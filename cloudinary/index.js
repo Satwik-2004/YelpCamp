@@ -13,10 +13,9 @@ const storage = new CloudinaryStorage({
     cloudinary,
     params: {
         folder: 'YelpCamp',
-        resource_type: 'image'  
-    },
+        allowedFormats: ['jpeg', 'png', 'jpg', 'avif']
+    }
 });
-
 module.exports = {
     cloudinary,
     storage,
