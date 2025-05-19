@@ -19,7 +19,7 @@ const User= require('./models/user');
 const mongoSanitize= require('express-mongo-sanitize'); 
 const helmet= require('helmet');
 
-const Campground = require('./models/camground');
+const Campground = require('./models/campground');
 const Review = require('./models/review');
 
 
