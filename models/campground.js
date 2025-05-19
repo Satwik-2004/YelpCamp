@@ -50,7 +50,7 @@ campgroundSchema.virtual('properties.popUpMarkup').get(function() {
     <p>${this.description.substring(0, 20)}...</p> 
     `
 });
-CampgroundSchema.virtual('thumbnail').get(function() {
+campgroundSchema.virtual('thumbnail').get(function() {
     if (this.images && this.images.length > 0) {
         return this.images[0].url.replace('/upload', '/upload/w_200');
     }
