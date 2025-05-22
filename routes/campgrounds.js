@@ -38,11 +38,11 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
-const upload= multer({ storage: memoryStorage,fileFilter });
+const upload= multer({ storage: storage,fileFilter });
 
 router.route('/')
      .get(catchAsync( campgrounds.index ))
-     .post( isLoggedIn , upload.array('image') , convertAvifToJpg ,validateCampground, catchAsync( campgrounds.createCampground))    
+     .post( isLoggedIn , upload.array('image')  ,validateCampground, catchAsync( campgrounds.createCampground))    
     
 
     router.get('/new', isLoggedIn , campgrounds.renderNewForm);
