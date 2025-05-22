@@ -1,8 +1,8 @@
-const mongoose= require('mongoose');
-
+const mongoose= require('mongoose');  
 const Review= require('./review');
 const { required } = require('joi');
 const Schema= mongoose.Schema;
+
 // https://res.cloudinary.com/dhzyemopo/image/upload/v1736786976/YelpCamp/smilpzulofjfujly6e3v.png
 const ImageSchema= new Schema({
         url: String,
@@ -12,6 +12,7 @@ const ImageSchema= new Schema({
 ImageSchema.virtual('thumbnail').get(function() {
     return this.url ? this.url.replace('/upload', '/upload/w_200') : '';
 });
+
 const opts= { toJSON: { virtuals: true }};
 
 const campgroundSchema= new Schema({
@@ -33,29 +34,22 @@ const campgroundSchema= new Schema({
     location: String,
     author:{
         type: Schema.Types.ObjectId,
-        ref: 'User', 
-    },
+        ref: 'User',
+     },
     reviews: [
         {
             type: Schema.Types.ObjectId, 
-            ref: 'Review'
+             ref: 'Review'
         }
     ]
 }, opts);
 
-campgroundSchema.virtual('properties.popUpMarkup').get(function() {
-    return `
-    <strong><a href="/campgrounds/${this._id}"> ${this.title} </a><strong>
-    <p>${this.description.substring(0, 20)}...</p> 
-    `
-});
-campgroundSchema.virtual('thumbnail').get(function() {
-    if (this.images && this.images.length > 0) {
-        return this.images[0].url.replace('/upload', '/upload/w_200');
-    }
-    return '/images/default-campground.jpg';
-});
 
+campgroundSchema.virtual('properties.popUpMarkup').get(function () {
+    const safeDescription = this.description || '';
+    return `<strong><a href="/campgrounds/${this._id}">${this.title}</a></strong>
+    <p>${safeDescription.substring(0, 20)}...</p>`;
+});
 
 campgroundSchema.post('findOneAndDelete', async function(doc){
     if(doc){
