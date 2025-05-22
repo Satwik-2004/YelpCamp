@@ -12,7 +12,7 @@ const ImageSchema= new Schema({
 ImageSchema.virtual('thumbnail').get(function() {
     return this.url ? this.url.replace('/upload', '/upload/w_200') : '';
 });
-const opts= { toJSON: { virtulas: true }};
+const opts= { toJSON: { virtuals: true }};
 
 const campgroundSchema= new Schema({
     title: String,

@@ -4,14 +4,19 @@
     <div class="row">
         <div class="col-6">
           <div id='map' style='width: 400px; height: 300px;'></div>
-          <div id="campgroundCarousel" class="carousel slide">
-            <div class="carousel-inner">
-              <% campground.images.forEach((img, i) => {%>
-              <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
-    <img src="<%= img.url || '/images/default-campground.jpg' %>" class="d-block w-100" alt="">
-</div>
-              <% }) %>
+          <% if(campground.images && campground.images.length> 0) { %>
+            <div id="campgroundCarousel" class="carousel slide">
+              <div class="carousel-inner">
+                <% campground.images.forEach((img, i)=> {%>
+                  <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                    <img src="<%= img.url %>" class="d-block w-100" alt="" style="max-height: 400px; object-fit: cover;">
+                  </div>
+                  <% }) %>
+              </div>
+              <!-- carousel controls code stays the same -->
             </div>
+            <% } else { %>
+              <div class="alert alert-info">No images available for this campground.</div>     <% } %>
             <% if(campground.images.length >1) { %>
             <button class="carousel-control-prev" type="button" data-bs-target="#campgroundCarousel" data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
